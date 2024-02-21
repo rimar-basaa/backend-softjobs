@@ -12,7 +12,7 @@ const verificarToken = (req, res, next) => {
         next();
 
     } catch (error) {
-        res.status(400).json({ mensaje: 'Token NO es valido' });
+        res.status(400).json({ mensaje: 'Token NO es valido o Tiempo expirado' });
     };
 };
 

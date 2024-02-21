@@ -10,19 +10,20 @@ const { traerUsuario, registrarUsuario } = require('../consultas/consultas');
 
 // ***** Registrar usuario
 router.post("/usuarios", 
-    [body('email') 
-        .not().isEmpty().withMessage('email NO puede estar vacío')
-        .trim().isEmail().withMessage('Formato de correo es invalido')
-        .optional(),
+    [body('email')
+        .exists().withMessage('Este campo es obligatorio') 
+        .not().isEmpty().withMessage('email NO puede estar vacío')        
+        .trim().isEmail().withMessage('Formato de correo es invalido'),
     body('password')
-        .not().isEmpty().withMessage('password NO puede estar vacío')
-        .optional(),
+        .exists().withMessage('Este campo es obligatorio')
+        .not().isEmpty().withMessage('password NO puede estar vacío'),
     body('rol')
-        .not().isEmpty().withMessage('rol NO puede estar vacío')
-        .optional(),
+        .exists().withMessage('Este campo es obligatorio')
+        .not().isEmpty().withMessage('rol NO puede estar vacío'),
     body('lenguage')
-        .not().isEmpty().withMessage('lenguage NO puede estar vacío')
-        .optional(), validarCampos],
+        .exists().withMessage('Este campo es obligatorio')
+        .not().isEmpty().withMessage('lenguage NO puede estar vacío'),
+    validarCampos],
 usuarioUnico, async (req, res) => {
     try {
         const { email, password, rol, lenguage } = req.body;
@@ -37,13 +38,14 @@ usuarioUnico, async (req, res) => {
 
 // ***** Inicio sesion
 router.post("/login",
-    [body('email') 
+    [body('email')
+        .exists().withMessage('Este campo es obligatorio')
         .not().isEmpty().withMessage('email NO puede estar vacío')
-        .trim().isEmail().withMessage('Formato de correo es invalido')
-        .optional(),
+        .trim().isEmail().withMessage('Formato de correo es invalido'),
     body('password')
-        .not().isEmpty().withMessage('password NO puede estar vacío')
-        .optional(), validarCampos],
+        .exists().withMessage('Este campo es obligatorio')
+        .not().isEmpty().withMessage('password NO puede estar vacío'),
+    validarCampos],
 async (req, res) => {
     try {
         const { email, password } = req.body;
